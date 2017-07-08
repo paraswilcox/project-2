@@ -88,13 +88,25 @@ def recent_media_liked_by_self():
     else:
         print("Status code other than 200")
 
-# hollow function to like a user's recent post
+
+# full fledged function to like a user's recent post
 def like_a_users_post(insta_username):
-    pass
+    post_id = get_user_recent_posts(insta_username)
+    print("post_id = ", post_id)
+    request_url = BASE_URL + "media/{}/likes".format(post_id)
+    print("Requesting:\n{}".format(request_url))
+    like = requests.post(request_url, data={'access_token': APP_ACCESS_TOKEN}).json()
+    print(like)
+    if like['meta']['code'] == 200:
+        print("Like was successful")
+    else:
+        print("Like not successful")
+
 
 # hollow function to get a list of comments on a user's recent post
 def get_list_of_comments_on_users_post(insta_username):
     pass
+
 
 # hollow function to comment on a user's recent post
 def comment_on_a_users_post(insta_username):
