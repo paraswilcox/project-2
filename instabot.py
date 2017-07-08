@@ -10,9 +10,20 @@ menu = "\nChoose from the following options:\n1.View your own details\n2.Get use
        "6.Like a user's post\n7.Get List of comments on a user's post\n8.Comment on a user's post\n9.exit\n"
 
 
-# hollow function to show user's own info
+# full fledged function to show user's own info
 def self_info():
-    pass
+    request_url = (BASE_URL + 'users/self/?access_token=' + APP_ACCESS_TOKEN)
+    user_info = requests.get(request_url).json()
+    if user_info["meta"]["code"] == 200:
+        if len(user_info["data"]):
+            print("Username: {}".format(user_info["data"]["username"]))
+            print("No. of followers: {}".format(user_info["data"]["counts"]["followed_by"]))
+            print("No. of people you are following: {}".format(user_info["data"]["counts"]["follows"]))
+            print("No. of posts: {}".format(user_info["data"]["counts"]["media"]))
+        else:
+            print("User does not exist")
+    else:
+        print("status code other than 200")
 
 
 # hollow function to take username as input and return user id
