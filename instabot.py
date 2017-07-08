@@ -10,6 +10,43 @@ menu = "\nChoose from the following options:\n1.View your own details\n2.Get use
        "6.Like a user's post\n7.Get List of comments on a user's post\n8.Comment on a user's post\n9.exit\n"
 
 
+# hollow function to show user's own info
+def self_info():
+    pass
+
+
+# hollow function to take username as input and return user id
+def get_user_id(insta_username):
+    pass
+
+
+# hollow function to return one's own recent post's id
+def get_recent_posts():
+    pass
+
+
+# hollow function to take username as input and return user's recent post's id
+def get_user_recent_posts(insta_username):
+    pass
+
+
+# hollow function to print the id of media liked by self
+def recent_media_liked_by_self():
+    pass
+
+# hollow function to like a user's recent post
+def like_a_users_post(insta_username):
+    pass
+
+# hollow function to get a list of comments on a user's recent post
+def get_list_of_comments_on_users_post(insta_username):
+    pass
+
+# hollow function to comment on a user's recent post
+def comment_on_a_users_post(insta_username):
+    pass
+
+
 # creating High level design of function show_menu()
 def show_menu():
     insta_username = input("Enter the username for which you want to perform these actions")
