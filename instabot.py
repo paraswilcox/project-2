@@ -134,11 +134,9 @@ def comment_on_a_users_post(insta_username):
         print("comment not successful")
 
 
-insta_username = input("Enter the username for which you want to perform these actions")
-
-
 # creating High level design of function show_menu()
 def show_menu():
+    insta_username = input("Enter the username for which you want to perform these actions")
     if len(insta_username) > 0:
         choice = int(input(menu))
         if choice == 1:
