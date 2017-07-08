@@ -134,30 +134,35 @@ def comment_on_a_users_post(insta_username):
         print("comment not successful")
 
 
+insta_username = input("Enter the username for which you want to perform these actions")
+
+
 # creating High level design of function show_menu()
 def show_menu():
-    insta_username = input("Enter the username for which you want to perform these actions")
     if len(insta_username) > 0:
         choice = int(input(menu))
         if choice == 1:
-            pass
+            self_info()
         elif choice == 2:
-            pass
+            get_user_id(insta_username)
         elif choice == 3:
-            pass
+            get_recent_posts()
         elif choice == 4:
-            pass
+            get_user_recent_posts(insta_username)
         elif choice == 5:
-            pass
+            recent_media_liked_by_self()
         elif choice == 6:
-            pass
+            like_a_users_post(insta_username)
         elif choice == 7:
-            pass
+            get_list_of_comments_on_users_post(insta_username)
         elif choice == 8:
-            pass
+            comment_on_a_users_post(insta_username)
         elif choice == 9:
             exit(code="Application Closed")
         else:
             exit(code="You did'nt entered one of the choices above")
     else:
         exit(code="You have to enter a username")
+
+
+show_menu()
