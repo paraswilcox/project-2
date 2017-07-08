@@ -24,6 +24,7 @@ def self_info():
             print("User does not exist")
     else:
         print("status code other than 200")
+    show_menu()
 
 
 # full fledged function to take username as input and return user id
@@ -87,6 +88,7 @@ def recent_media_liked_by_self():
             print("No media to show")
     else:
         print("Status code other than 200")
+    show_menu()
 
 
 # full fledged function to like a user's recent post
@@ -101,6 +103,7 @@ def like_a_users_post(insta_username):
         print("Like was successful")
     else:
         print("Like not successful")
+    show_menu()
 
 
 # full fledged function to get a list of comments on a user's recent post
@@ -117,6 +120,7 @@ def get_list_of_comments_on_users_post(insta_username):
             print()
     else:
         print("Status code other than 200")
+    show_menu()
 
 
 # full fledged function to comment on a user's recent post
@@ -132,6 +136,7 @@ def comment_on_a_users_post(insta_username):
         print("comment was successful")
     else:
         print("comment not successful")
+    show_menu()
 
 
 # creating High level design of function show_menu()
@@ -142,11 +147,17 @@ def show_menu():
         if choice == 1:
             self_info()
         elif choice == 2:
-            get_user_id(insta_username)
+            user_id = get_user_id(insta_username)
+            print(user_id)
+            show_menu()
         elif choice == 3:
-            get_recent_posts()
+            own_post_id = get_recent_posts()
+            print(own_post_id)
+            show_menu()
         elif choice == 4:
-            get_user_recent_posts(insta_username)
+            user_post_id = get_user_recent_posts(insta_username)
+            print(user_post_id)
+            show_menu()
         elif choice == 5:
             recent_media_liked_by_self()
         elif choice == 6:
