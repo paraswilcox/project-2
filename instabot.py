@@ -58,7 +58,21 @@ def get_recent_posts():
 
 # hollow function to take username as input and return user's recent post's id
 def get_user_recent_posts(insta_username):
-    pass
+    user_id = get_user_id(insta_username)
+    if user_id is not None:
+        request_url = "https://api.instagram.com/v1/users/{}/media/recent/?access_token={}".format(user_id,
+                                                                                                   APP_ACCESS_TOKEN)
+        print("Requesting:\n{}".format(request_url))
+        recent_post = requests.get(request_url).json()
+        if recent_post["meta"]["code"] == 200:
+            if len(recent_post["data"]) > 0:
+                return recent_post["data"][0]["id"]
+            else:
+                print("No posts to show")
+                return None
+        else:
+            print("Status code other than 200")
+            return None
 
 
 # hollow function to print the id of media liked by self
