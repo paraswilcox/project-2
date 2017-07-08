@@ -26,7 +26,7 @@ def self_info():
         print("status code other than 200")
 
 
-# hollow function to take username as input and return user id
+# full fledged function to take username as input and return user id
 def get_user_id(insta_username):
     request_url = BASE_URL + "users/search?q={}&access_token={}".format(insta_username, APP_ACCESS_TOKEN)
     print("Requesting URL \n{}".format(request_url))
@@ -40,9 +40,20 @@ def get_user_id(insta_username):
         print("Status code other than 200 found")
 
 
-# hollow function to return one's own recent post's id
+# full fledged function to return one's own recent post's id
 def get_recent_posts():
-    pass
+    request_url = BASE_URL + "users/self/media/recent/?access_token={}".format(APP_ACCESS_TOKEN)
+    print("Requesting:\n{}".format(request_url))
+    recent_post = requests.get(request_url).json()
+    if recent_post["meta"]["code"] == 200:
+        if len(recent_post["data"]) > 0:
+            return recent_post["data"][0]["id"]
+        else:
+            print("No posts to show")
+            return None
+    else:
+        print("Status code other than 200")
+        return None
 
 
 # hollow function to take username as input and return user's recent post's id
