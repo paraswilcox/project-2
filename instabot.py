@@ -119,9 +119,19 @@ def get_list_of_comments_on_users_post(insta_username):
         print("Status code other than 200")
 
 
-# hollow function to comment on a user's recent post
+# full fledged function to comment on a user's recent post
 def comment_on_a_users_post(insta_username):
-    pass
+    post_id = get_user_recent_posts(insta_username)
+    print("post_id = ", post_id)
+    request_url = BASE_URL + "media/{}/comments".format(post_id)
+    print("Requesting:\n{}".format(request_url))
+    comment_to_post = input("Enter your comment: ")
+    comment = requests.post(request_url, data={'access_token': APP_ACCESS_TOKEN, 'text': comment_to_post}).json()
+    print(comment)
+    if comment['meta']['code'] == 200:
+        print("comment was successful")
+    else:
+        print("comment not successful")
 
 
 # creating High level design of function show_menu()
