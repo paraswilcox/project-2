@@ -28,7 +28,16 @@ def self_info():
 
 # hollow function to take username as input and return user id
 def get_user_id(insta_username):
-    pass
+    request_url = BASE_URL + "users/search?q={}&access_token={}".format(insta_username, APP_ACCESS_TOKEN)
+    print("Requesting URL \n{}".format(request_url))
+    user_info = requests.get(request_url).json()
+    if user_info["meta"]["code"] == 200:
+        if len(user_info["data"]):
+            return user_info['data'][0]['id']
+        else:
+            print("No user found")
+    else:
+        print("Status code other than 200 found")
 
 
 # hollow function to return one's own recent post's id
