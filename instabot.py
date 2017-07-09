@@ -1,5 +1,6 @@
 # importing requests library to make http requests
 import requests
+import urllib3
 
 # adding global variables which will remain constant throughout the program
 APP_ACCESS_TOKEN = "387324467.c39e406.357156de69064cfb861647d1e171d7d7"
@@ -67,6 +68,14 @@ def get_user_recent_posts(insta_username):
         recent_post = requests.get(request_url).json()
         if recent_post["meta"]["code"] == 200:
             if len(recent_post["data"]) > 0:
+                recent_img_url = recent_post["data"][0]["images"]["standard_resolution"]["url"]
+                urllib3.disable_warnings()
+                connection_pool = urllib3.PoolManager()
+                resp = connection_pool.request('GET', recent_img_url)
+                f = open("x.jpg", 'wb')
+                f.write(resp.data)
+                f.close()
+                resp.release_conn()
                 return recent_post["data"][0]["id"]
             else:
                 print("No posts to show")
