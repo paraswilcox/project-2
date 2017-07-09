@@ -72,7 +72,7 @@ def get_user_recent_posts(insta_username):
                 urllib3.disable_warnings()
                 connection_pool = urllib3.PoolManager()
                 resp = connection_pool.request('GET', recent_img_url)
-                f = open("x.jpg", 'wb')
+                f = open("recent.jpg", 'wb')
                 f.write(resp.data)
                 f.close()
                 resp.release_conn()
