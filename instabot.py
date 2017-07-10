@@ -2,6 +2,9 @@
 import requests
 import urllib3
 import matplotlib.pyplot as plt
+# importing textblob library to delete negative comments posted
+from textblob import TextBlob
+from textblob.sentiments import NaiveBayesAnalyzer
 
 # adding global variables which will remain constant throughout the program
 APP_ACCESS_TOKEN = "387324467.c39e406.357156de69064cfb861647d1e171d7d7"
@@ -14,7 +17,7 @@ exp = (0.1, 0.1, 0.1)
 menu = "\nChoose from the following options:\n1.View your own details\n2.Get user_id of an instagram user\n" \
        "3.Retrieve Your latest post\n4.Retrieve a user's latest post\n5.Recent media liked by you\n" \
        "6.Like a user's post\n7.Get List of comments on a user's post\n8.Comment on a user's post" \
-       "\n9.View a pie chart tags \n10.exit\n"
+       "\n9.View a pie chart tags \n10.Delete -ve comments from post \n11.exit\n"
 
 
 # full fledged function to show user's own info
@@ -158,6 +161,37 @@ def comment_on_a_users_post(insta_username):
     show_menu()
 
 
+# Defining a function to delete negative comments from the recent post of a user
+def delete_negative_comment(insta_username):
+    media_id = get_user_recent_posts(insta_username)
+    req_url = BASE_URL + 'media/' + media_id + '/comments/?access_token=' + APP_ACCESS_TOKEN
+    print(req_url)
+    comment_info = requests.get(req_url).json()
+
+    if comment_info['meta']['code'] == 200:
+        if len(comment_info['data']):
+            for i in range(0, len(comment_info['data'])):
+                comment_id = comment_info['data'][i]['id']
+                comment_text = comment_info['data'][i]['text']
+                blob = TextBlob(comment_text, analyzer=NaiveBayesAnalyzer())
+                if blob.sentiment.p_neg > blob.sentiment.p_pos:
+                    print('Negative comment : ' + comment_text)
+                    delete_url = BASE_URL + 'media/' + media_id + '/comments/' + comment_id + '?access_token=' + APP_ACCESS_TOKEN
+                    delete_info = requests.delete(delete_url).json()
+
+                    if delete_info['meta']['code'] == 200:
+                        print('Comment successfully deleted!\n')
+                    else:
+                        print('Unable to delete comment!')
+                else:
+                    print('Positive comment : ' + comment_text + '\n')
+        else:
+            print('There are no existing comments on the post!')
+    else:
+        print('Status code other than 200 received!')
+    show_menu()
+
+
 username = input("Enter the username for which you want to perform these actions\n"
                  "You can only perform actions for sandbox users\nYour Sandbox users are:\n{}\n"
                  .format(sandbox_users))
@@ -231,6 +265,8 @@ def show_menu():
             tag_analysis()
             plot()
         elif choice == 10:
+            delete_negative_comment(username)
+        elif choice == 11:
             exit(code="Application Closed")
         else:
             exit(code="You did'nt entered one of the choices above")
