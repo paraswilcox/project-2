@@ -1,10 +1,10 @@
 # importing requests library to make http requests
 import requests
 import urllib3
-
 # adding global variables which will remain constant throughout the program
 APP_ACCESS_TOKEN = "387324467.c39e406.357156de69064cfb861647d1e171d7d7"
 BASE_URL = 'https://api.instagram.com/v1/'
+sandbox_users = ["eviledmpredator"]
 # creating a variable menu
 menu = "\nChoose from the following options:\n1.View your own details\n2.Get user_id of an instagram user\n" \
        "3.Retrieve Your latest post\n4.Retrieve a user's latest post\n5.Recent media liked by you\n" \
@@ -155,7 +155,9 @@ def comment_on_a_users_post(insta_username):
     show_menu()
 
 
-username = input("Enter the username for which you want to perform these actions")
+username = input("Enter the username for which you want to perform these actions\n"
+                 "You can only perform actions for sandbox users\nYour Sandbox users are:\n{}\n"
+                 .format(sandbox_users))
 
 
 # creating High level design of function show_menu()
