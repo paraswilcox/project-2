@@ -1,14 +1,20 @@
 # importing requests library to make http requests
 import requests
 import urllib3
+import matplotlib.pyplot as plt
+
 # adding global variables which will remain constant throughout the program
 APP_ACCESS_TOKEN = "387324467.c39e406.357156de69064cfb861647d1e171d7d7"
 BASE_URL = 'https://api.instagram.com/v1/'
 sandbox_users = ["eviledmpredator"]
+count = [0, 0, 0]
+name = ["", "", ""]
+exp = (0.1, 0.1, 0.1)
 # creating a variable menu
 menu = "\nChoose from the following options:\n1.View your own details\n2.Get user_id of an instagram user\n" \
        "3.Retrieve Your latest post\n4.Retrieve a user's latest post\n5.Recent media liked by you\n" \
-       "6.Like a user's post\n7.Get List of comments on a user's post\n8.Comment on a user's post\n9.exit\n"
+       "6.Like a user's post\n7.Get List of comments on a user's post\n8.Comment on a user's post" \
+       "\n9.View a pie chart tags \n10.exit\n"
 
 
 # full fledged function to show user's own info
@@ -157,6 +163,40 @@ username = input("Enter the username for which you want to perform these actions
                  .format(sandbox_users))
 
 
+def tag_analysis():
+    i = 0
+    print('Maximum of 3 tags allowed...!!!')
+    while True:
+        tag = input('Enter the tag to be evaluated : ')
+        name[i] = tag
+        req_url = BASE_URL + 'tags/' + tag + '?access_token=' + APP_ACCESS_TOKEN
+        tag_info = requests.get(req_url).json()
+        count[i] = tag_info['data']['media_count']
+        print('Do you want to evaluate another tag')
+        ans = input()
+        i = i + 1
+        if ans == 'n':
+            break
+        elif ans == 'y':
+            continue
+        else:
+            exit()
+
+    print(count)
+
+
+def plot():
+    labels = name
+    sizes = count
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=exp, labels=labels, autopct='%1.1f%%',
+            shadow=True, startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.show()
+    show_menu()
+
+
 # creating High level design of function show_menu()
 def show_menu():
     if len(username) > 0:
@@ -186,6 +226,9 @@ def show_menu():
         elif choice == 8:
             comment_on_a_users_post(username)
         elif choice == 9:
+            tag_analysis()
+            plot()
+        elif choice == 10:
             exit(code="Application Closed")
         else:
             exit(code="You did'nt entered one of the choices above")
