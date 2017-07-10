@@ -128,7 +128,7 @@ def get_list_of_comments_on_users_post(insta_username):
     print("Requesting:\n{}".format(request_url))
     comments_on_this_post = requests.get(request_url).json()
     if comments_on_this_post["meta"]["code"] == 200:
-        for i in range(len(comments_on_this_post)):
+        for i in range(0, len(comments_on_this_post["data"])):
             print(comments_on_this_post["data"][i]["from"]["username"], end=" : ")
             print(comments_on_this_post["data"][i]["text"])
             print()
