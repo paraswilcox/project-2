@@ -110,7 +110,6 @@ def recent_media_liked_by_self():
 # full fledged function to like a user's recent post
 def like_a_users_post(insta_username):
     post_id = get_user_recent_posts(insta_username)
-    print("post_id = ", post_id)
     request_url = BASE_URL + "media/{}/likes".format(post_id)
     print("Requesting:\n{}".format(request_url))
     like = requests.post(request_url, data={'access_token': APP_ACCESS_TOKEN}).json()
@@ -125,7 +124,6 @@ def like_a_users_post(insta_username):
 # full fledged function to get a list of comments on a user's recent post
 def get_list_of_comments_on_users_post(insta_username):
     post_id = get_user_recent_posts(insta_username)
-    print("post_id = ", post_id)
     request_url = BASE_URL + "media/{}/comments?access_token={}".format(post_id, APP_ACCESS_TOKEN)
     print("Requesting:\n{}".format(request_url))
     comments_on_this_post = requests.get(request_url).json()
@@ -142,7 +140,6 @@ def get_list_of_comments_on_users_post(insta_username):
 # full fledged function to comment on a user's recent post
 def comment_on_a_users_post(insta_username):
     post_id = get_user_recent_posts(insta_username)
-    print("post_id = ", post_id)
     request_url = BASE_URL + "media/{}/comments".format(post_id)
     print("Requesting:\n{}".format(request_url))
     comment_to_post = input("Enter your comment: ")
@@ -173,12 +170,12 @@ def show_menu():
         elif choice == 3:
             own_post_id = get_recent_posts()
             print("Your Post Has Been Downloaded")
-            print(own_post_id)
+            print("Your post ID is\n", own_post_id)
             show_menu()
         elif choice == 4:
             user_post_id = get_user_recent_posts(username)
             print("User's recent Post has been downloaded")
-            print(user_post_id)
+            print("The user's post ID is\n", user_post_id)
             show_menu()
         elif choice == 5:
             recent_media_liked_by_self()
