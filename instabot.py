@@ -163,6 +163,7 @@ username = input("Enter the username for which you want to perform these actions
                  .format(sandbox_users))
 
 
+# this function takes tags one by one as input and evaluates them
 def tag_analysis():
     i = 0
     print('Maximum of 3 tags allowed...!!!...')
@@ -185,6 +186,7 @@ def tag_analysis():
     print(count)
 
 
+# this function makes use of global variables modified by the tag_analysis fxn and plots a pie chart
 def plot():
     labels = name
     sizes = count
