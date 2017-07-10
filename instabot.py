@@ -165,7 +165,7 @@ username = input("Enter the username for which you want to perform these actions
 
 def tag_analysis():
     i = 0
-    print('Maximum of 3 tags allowed...!!!')
+    print('Maximum of 3 tags allowed...!!!...')
     while True:
         tag = input('Enter the tag to be evaluated : ')
         name[i] = tag
