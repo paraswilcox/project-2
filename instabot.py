@@ -49,6 +49,13 @@ def get_recent_posts():
     recent_post = requests.get(request_url).json()
     if recent_post["meta"]["code"] == 200:
         if len(recent_post["data"]) > 0:
+            recent_img_url = recent_post["data"][0]["images"]["standard_resolution"]["url"]
+            urllib3.disable_warnings()
+            connection_pool = urllib3.PoolManager()
+            resp = connection_pool.request('GET', recent_img_url)
+            f = open("own_post.jpg", 'wb')
+            f.write(resp.data)
+            f.close()
             return recent_post["data"][0]["id"]
         else:
             print("No posts to show")
@@ -161,6 +168,7 @@ def show_menu():
             show_menu()
         elif choice == 3:
             own_post_id = get_recent_posts()
+            print("Your Post Has Been Downloaded")
             print(own_post_id)
             show_menu()
         elif choice == 4:
